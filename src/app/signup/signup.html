@@ -1,0 +1,37 @@
+<div class="min-h-screen flex items-center justify-center">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="w-full max-w-lg bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Create account</h2>
+
+    <label class="block text-sm text-gray-600 mb-1">Full Name</label>
+    <input type="text" formControlName="full_name" placeholder="Your name"
+      class="w-full border rounded-md px-3 py-2 mb-4 text-sm" />
+
+    <label class="block text-sm text-gray-600 mb-1">Email</label>
+    <input type="email" formControlName="email" placeholder="name@gmail.com"
+      class="w-full border rounded-md px-3 py-2 mb-1 text-sm" />
+
+    @if(signupForm.get('email')?.touched && signupForm.get('email')?.invalid){   
+      <p class="text-red-500 text-xs mb-3">Enter a valid email</p>
+     }
+
+    <label class="block text-sm text-gray-600 mb-1">Password</label>
+    <input type="password" formControlName="password" placeholder="••••••••"
+      class="w-full border rounded-md px-3 py-2 mb-1 text-sm" />
+
+    @if(signupForm.get('password')?.touched && signupForm.get('password')?.invalid){
+    <p class="text-red-500 text-xs mb-3">Password must be at least 8 characters</p>
+    }
+
+    <button type="submit" [disabled]="signupForm.invalid"
+      class="w-full bg-black text-white rounded-md py-2 text-sm disabled:opacity-40">
+      Sign up
+    </button>
+
+    <!-- <p *ngIf="errorMessage" class="text-red-500 text-xs mt-3">{{ errorMessage }}</p> -->
+
+    <p class="text-sm text-gray-500 mt-4 text-center">
+      Already have an account?
+      <a routerLink="/login" class="text-black underline">Log in</a>
+    </p>
+  </form>
+</div>
