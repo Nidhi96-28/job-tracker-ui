@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,20 +13,31 @@ export class Signup implements OnInit {
 
   constructor(private fb: FormBuilder) {}
    signupForm!: FormGroup;
+  
+   private authService = inject(AuthService);
+   private router = inject(Router);
   ngOnInit(): void {
 
   this.signupForm = this.fb.group({
   full_name: [''],
   email: ['', [Validators.required, Validators.email]],
-  password: ['', [Validators.required, Validators.minLength(8)]],
+  hashed_password: ['', [Validators.required, Validators.minLength(8)]],
+  role: ['', Validators.required]
 });
 }
 
 onSubmit() {
-  if (this.signupForm.valid) {
-    console.log('Form Submitted!', this.signupForm.value);
-  } else {
-    console.log('Form is invalid');
-  }
+  const payload = this.signupForm.value as User;
+
+  this.authService.signup(payload)
+      .subscribe({
+        next: (response) => {
+          this.signupForm.reset();
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.log('Error:', err);
+        }
+      });
 }
 }

@@ -14,11 +14,19 @@
       <p class="text-red-500 text-xs mb-3">Enter a valid email</p>
      }
 
-    <label class="block text-sm text-gray-600 mb-1">Password</label>
-    <input type="password" formControlName="password" placeholder="••••••••"
+     <label class="block text-sm text-gray-600 mb-1">Role</label>
+    <input type="text" formControlName="role" placeholder="admin"
       class="w-full border rounded-md px-3 py-2 mb-1 text-sm" />
 
-    @if(signupForm.get('password')?.touched && signupForm.get('password')?.invalid){
+    @if(signupForm.get('role')?.touched && signupForm.get('role')?.invalid){   
+      <p class="text-red-500 text-xs mb-3">Enter your role</p>
+     }
+
+    <label class="block text-sm text-gray-600 mb-1">Password</label>
+    <input type="password" formControlName="hashed_password" placeholder="••••••••"
+      class="w-full border rounded-md px-3 py-2 mb-1 text-sm" />
+
+    @if(signupForm.get('hashed_password')?.touched && signupForm.get('hashed_password')?.invalid){
     <p class="text-red-500 text-xs mb-3">Password must be at least 8 characters</p>
     }
 

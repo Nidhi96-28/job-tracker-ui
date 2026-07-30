@@ -3,9 +3,9 @@
     <h2 class="text-xl font-semibold mb-4">Welcome back</h2>
 
     <label class="block text-sm text-gray-600 mb-1">Email</label>
-    <input type="email" formControlName="email" placeholder="name@company.com"
+    <input type="email" formControlName="username" placeholder="name@company.com"
       class="w-full border rounded-md px-3 py-2 mb-1 text-sm" />
-    @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+    @if (loginForm.get('username')?.touched && loginForm.get('username')?.invalid) {
       <p class="text-red-500 text-xs mb-3">Enter a valid email</p>
     }
 
