@@ -16,6 +16,10 @@ export const routes: Routes = [
         loadComponent: () => import('./edit-profile/edit-profile').then(m => m.EditProfile)
     },
     {
+        path:'home',
+        loadComponent: () => import('./home/home').then(m => m.Home)
+    },
+    {
         path: '',
         redirectTo: '/login',
         pathMatch: 'full'

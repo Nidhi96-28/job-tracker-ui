@@ -1,1 +1,31 @@
-<p>home works!</p>
+<section class="hero">
+  @if (user()) {
+    <h1>Welcome, {{ user()?.full_name }}</h1>
+  } @else {
+    <h1>Welcome</h1>
+  }
+  <p>Track every job application in one place.</p>
+  <a routerLink="/applications/new" class="cta">Add your first application</a>
+</section>
+
+@if (profileIncomplete()) {
+  <div class="banner">
+    <span>Complete your profile to get the most out of your tracker.</span>
+    <a routerLink="/edit-profile">Complete profile</a>
+  </div>
+}
+
+<section class="stats">
+  <div class="stat-card">
+    <span class="label">Applications</span>
+    <span class="value">{{ applicationCount }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Interviews</span>
+    <span class="value">{{ interviewCount }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="label">Offers</span>
+    <span class="value">{{ offerCount }}</span>
+  </div>
+</section>

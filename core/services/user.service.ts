@@ -33,4 +33,12 @@ export class UserService {
   refreshToken() {
     return this.http.post(`${this.baseUrl}/auth/refresh`, {}, { withCredentials: true });
   }
+
+  logout() {
+    return this.http.post(`${this.baseUrl}/auth/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        this.userSignal.set(null);
+      })
+    );
+  }
 }
