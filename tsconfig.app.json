@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "core/services/user.service.ts", "core/services/user.service.spec.ts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

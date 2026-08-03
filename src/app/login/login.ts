@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,10 @@ export class Login implements OnInit {
   constructor(private fb: FormBuilder) { }
   loginForm!: FormGroup;
 
-  private service = inject(AuthService);
+  private service = inject(UserService);
   private router = inject(Router)
 
+  
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -31,7 +33,7 @@ export class Login implements OnInit {
         {
           next: (response) => {
             this.loginForm.reset();
-            this.router.navigate(["/home"]);
+            this.router.navigateByUrl("/edit-profile");
             
           },
           error: (err) => {

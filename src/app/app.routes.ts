@@ -12,6 +12,10 @@ export const routes: Routes = [
         component: Signup
     },
     {
+        path: 'edit-profile',
+        loadComponent: () => import('./edit-profile/edit-profile').then(m => m.EditProfile)
+    },
+    {
         path: '',
         redirectTo: '/login',
         pathMatch: 'full'

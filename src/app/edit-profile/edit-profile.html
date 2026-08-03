@@ -1,0 +1,82 @@
+<div class="min-h-screen w-full bg-gray-50 py-10 px-4 flex justify-center">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full max-w-2xl bg-white rounded-lg shadow-md p-6">
+
+    <h2 class="text-xl font-semibold mb-6">Complete your profile</h2>
+
+    <!-- Personal details -->
+    <div class="mb-6">
+      <p class="text-sm font-medium text-gray-600 mb-3">Personal details</p>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs text-gray-500 mb-1">Date of birth</label>
+          <input type="date" formControlName="date_of_birth" class="w-full border rounded-md px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-500 mb-1">Phone number</label>
+          <input type="text" formControlName="phone_number" placeholder="+91 90000 00000"
+            class="w-full border rounded-md px-3 py-2 text-sm" />
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs text-gray-500 mb-1">Address</label>
+          <input type="text" formControlName="address" placeholder="City, State, Country"
+            class="w-full border rounded-md px-3 py-2 text-sm" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-3">
+        <p class="text-sm font-medium text-gray-600">Education</p>
+        <button type="button" (click)="addEducation()" class="text-xs border rounded-md px-3 py-1">+ Add</button>
+      </div>
+
+      <div formArrayName="educations">
+        @for (edu of educations.controls; track $index) {
+          <div [formGroupName]="$index" class="border rounded-md p-3 mb-3">
+            <div class="grid grid-cols-2 gap-3 mb-2">
+              <input formControlName="degree" placeholder="Degree" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input formControlName="institution" placeholder="Institution" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input type="number" formControlName="start_year" placeholder="Start year" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input type="number" formControlName="end_year" placeholder="End year" class="border rounded-md px-2 py-1.5 text-sm" />
+            </div>
+            <button type="button" (click)="removeEducation($index)" class="text-xs text-red-500">Remove</button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Work experience -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-3">
+        <p class="text-sm font-medium text-gray-600">Work experience</p>
+        <button type="button" (click)="addWorkExperience()" class="text-xs border rounded-md px-3 py-1">+ Add</button>
+      </div>
+
+      <div formArrayName="work_experiences">
+        @for (work of workExperiences.controls; track $index) {
+          <div [formGroupName]="$index" class="border rounded-md p-3 mb-3">
+            <div class="grid grid-cols-2 gap-3 mb-2">
+              <input formControlName="title" placeholder="Job title" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input formControlName="company" placeholder="Company" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input type="date" formControlName="start_date" class="border rounded-md px-2 py-1.5 text-sm" />
+              <input type="date" formControlName="end_date" class="border rounded-md px-2 py-1.5 text-sm" />
+            </div>
+            <label class="text-xs flex items-center gap-2 mb-2">
+              <input type="checkbox" formControlName="is_current" />
+              Currently working here
+            </label>
+            <button type="button" (click)="removeWorkExperience($index)" class="text-xs text-red-500">Remove</button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <button type="submit" class="w-full bg-black text-white rounded-md py-2 text-sm">Save profile</button>
+
+    @if (errorMessage) {
+      <p class="text-red-500 text-xs mt-3">{{ errorMessage }}</p>
+    }
+
+  </form>
+</div>

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +14,7 @@ export class Signup implements OnInit {
   constructor(private fb: FormBuilder) {}
    signupForm!: FormGroup;
   
-   private authService = inject(AuthService);
+   private userService = inject(UserService);
    private router = inject(Router);
   ngOnInit(): void {
 
@@ -29,7 +29,7 @@ export class Signup implements OnInit {
 onSubmit() {
   const payload = this.signupForm.value as User;
 
-  this.authService.signup(payload)
+  this.userService.signup(payload)
       .subscribe({
         next: (response) => {
           this.signupForm.reset();
