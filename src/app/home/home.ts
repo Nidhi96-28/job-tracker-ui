@@ -23,6 +23,6 @@ export class Home {
   profileIncomplete = computed(() => {
     const u = this.user();
     if (!u) return false;
-    return !u.dateOfBirth || !u.phoneNumber || !u.address;
+    return !u.date_of_birth || !u.phone_number || !u.address;
   });
 }

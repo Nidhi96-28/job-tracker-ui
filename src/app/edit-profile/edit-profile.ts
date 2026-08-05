@@ -20,11 +20,11 @@ export class EditProfile {
   user = this.service.user;
 
   profileForm = this.fb.group({
-    date_of_birth: [''],
-    phone_number: [''],
-    address: [''],
-    educations: this.fb.array([]),
-    work_experiences: this.fb.array([]),
+    date_of_birth: [this.user()?.date_of_birth || ''],
+    phone_number: [this.user()?.phone_number || ''],
+    address: [this.user()?.address || ''],
+    educations: this.fb.array(this.user()?.educations || []),
+    work_experiences: this.fb.array(this.user()?.work_experiences || []),
   });
 
   get educations(): FormArray {

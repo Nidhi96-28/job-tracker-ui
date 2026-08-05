@@ -3,11 +3,11 @@ interface User {
   email: string;
   password: string;
   role: string;
-  dateOfBirth?: string;
-  phoneNumber?: string;
+  date_of_birth?: string;
+  phone_number?: string;
   address?: string;
   educations?: Education[];
-  workExperiences?: WorkExperience[];
+  work_experiences?: WorkExperience[];
 }
 
 interface LoginUser{
