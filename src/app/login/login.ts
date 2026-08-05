@@ -18,7 +18,7 @@ export class Login implements OnInit {
   private service = inject(UserService);
   private router = inject(Router)
 
-  
+
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -33,8 +33,16 @@ export class Login implements OnInit {
         {
           next: (response) => {
             this.loginForm.reset();
-            this.router.navigateByUrl("/edit-profile");
-            
+            const isComplete =
+              !!response.date_of_birth &&
+              !!response.phone_number &&
+              !!response.address &&
+              response.educations?.length > 0 &&
+              response.work_experiences?.length > 0;
+
+            this.router.navigateByUrl(isComplete ? '/home' : '/edit-profile');
+
+
           },
           error: (err) => {
             console.log('Error ', err);

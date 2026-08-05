@@ -20,7 +20,7 @@ export class UserService {
   login(data: LoginUser) {
     return this.http.post(`${this.baseUrl}/auth/token`, data).pipe(
       tap((response: any) => {
-        this.userSignal.set(response.user);
+        this.userSignal.set(response);
       })
     );
   }

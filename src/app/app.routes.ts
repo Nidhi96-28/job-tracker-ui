@@ -5,11 +5,13 @@ import { Login } from './login/login';
 export const routes: Routes = [
     {
         path: 'login',
-        component: Login
+        component: Login,
+        data: { hideHeader: true }
     },
     {
         path: 'signup',
-        component: Signup
+        component: Signup,
+        data: { hideHeader: true }
     },
     {
         path: 'edit-profile',
