@@ -26,7 +26,11 @@ export class UserService {
   }
 
   updateUserProfile(data: User) {
-    return this.http.put(`${this.baseUrl}/user/me`, data);
+    return this.http.put(`${this.baseUrl}/user/me`, data).pipe(
+      tap((response: any) => {
+        this.userSignal.set(response);
+      })
+    );
   }
 
 

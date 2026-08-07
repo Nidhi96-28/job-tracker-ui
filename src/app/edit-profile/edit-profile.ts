@@ -23,8 +23,12 @@ export class EditProfile {
     date_of_birth: [this.user()?.date_of_birth || ''],
     phone_number: [this.user()?.phone_number || ''],
     address: [this.user()?.address || ''],
-    educations: this.fb.array(this.user()?.educations || []),
-    work_experiences: this.fb.array(this.user()?.work_experiences || []),
+    educations: this.fb.array(
+      (this.user()?.educations || []).map(edu => this.createEducationGroup(edu))
+    ),
+    work_experiences: this.fb.array(
+      (this.user()?.work_experiences || []).map(exp => this.createWorkExperienceGroup(exp))
+    ),
   });
 
   get educations(): FormArray {
@@ -36,14 +40,7 @@ export class EditProfile {
   }
 
   addEducation() {
-    this.educations.push(
-      this.fb.group({
-        degree: ['', Validators.required],
-        institution: ['', Validators.required],
-        start_year: [null],
-        end_year: [null],
-      })
-    );
+    this.educations.push(this.createEducationGroup());
   }
 
   removeEducation(index: number) {
@@ -51,15 +48,7 @@ export class EditProfile {
   }
 
   addWorkExperience() {
-    this.workExperiences.push(
-      this.fb.group({
-        title: ['', Validators.required],
-        company: ['', Validators.required],
-        start_date: [''],
-        end_date: [''],
-        is_current: [false],
-      })
-    );
+    this.workExperiences.push(this.createWorkExperienceGroup());
   }
 
   removeWorkExperience(index: number) {
@@ -68,12 +57,31 @@ export class EditProfile {
 
   onSubmit() {
     if (this.profileForm.invalid) return;
-    const payload = {...this.user(), ...this.profileForm.value};
+    const payload = { ...this.user(), ...this.profileForm.value };
 
     this.service.updateUserProfile(payload as any)
       .subscribe({
         next: () => this.router.navigate(['/home']),
         error: () => this.errorMessage = 'Something went wrong. Try again.',
       });
+  }
+
+  private createEducationGroup(edu?: any) {
+    return this.fb.group({
+      degree: [edu?.degree || '', Validators.required],
+      institution: [edu?.institution || '', Validators.required],
+      start_year: [edu?.start_year || null],
+      end_year: [edu?.end_year || null],
+    });
+  }
+
+  private createWorkExperienceGroup(exp?: any) {
+    return this.fb.group({
+      title: [exp?.title || '', Validators.required],
+      company: [exp?.company || '', Validators.required],
+      start_date: [exp?.start_date || ''],
+      end_date: [exp?.end_date || ''],
+      is_current: [exp?.is_current || false],
+    });
   }
 }
