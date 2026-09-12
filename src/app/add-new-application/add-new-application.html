@@ -1,0 +1,68 @@
+<div class="page">
+  <h1>{{ isEditMode ? 'Edit application' : 'Add application' }}</h1>
+  <p class="subtitle">
+    {{ isEditMode ? 'Update the details of this application.' : "Log a role you've applied to and track it through to an offer." }}
+  </p>
+
+  <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="field">
+      <label for="company">Company</label>
+      <select id="company" (change)="onCompanyChange($any($event.target).value)">
+        <option value="" disabled [selected]="!applicationForm.value.company_id">Select a company</option>
+        @for (company of companies(); track company.id) {
+          <option [value]="company.id" [selected]="applicationForm.value.company_id === company.id">{{ company.name }}</option>
+        }
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    @if (isOtherCompany()) {
+      <div class="field">
+        <label for="new_company_name">New company name</label>
+        <input id="new_company_name" type="text" formControlName="new_company_name" placeholder="Enter company name" />
+      </div>
+    }
+
+    <div class="field">
+      <label for="role">Role</label>
+      <input id="role" type="text" formControlName="role_title" placeholder="e.g. Senior Frontend Engineer" />
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          <option value="applied">Applied</option>
+          <option value="interview">Interview</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="applied_date">Applied on</label>
+        <input id="applied_date" type="date" formControlName="applied_date" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="job_url">Job URL</label>
+      <input id="job_url" type="url" formControlName="job_url" placeholder="https://..." />
+    </div>
+
+    <div class="field">
+      <label for="notes">Notes</label>
+      <textarea id="notes" formControlName="notes" rows="4" placeholder="Referral, recruiter contact, interview prep..."></textarea>
+    </div>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="applicationForm.invalid">
+        {{ isEditMode ? 'Save changes' : 'Save application' }}
+      </button>
+    </div>
+  </form>
+</div>

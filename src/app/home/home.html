@@ -1,31 +1,65 @@
 <section class="hero">
   @if (user()) {
-    <h1>Welcome, {{ user()?.full_name }}</h1>
+  <h1>Welcome, {{ user()?.full_name }}</h1>
   } @else {
-    <h1>Welcome</h1>
+  <h1>Welcome</h1>
   }
   <p>Track every job application in one place.</p>
-  <a routerLink="/applications/new" class="cta">Add your first application</a>
+  <a routerLink="/applications/new" class="cta">Add application</a>
 </section>
 
 @if (profileIncomplete()) {
-  <div class="banner">
-    <span>Complete your profile to get the most out of your tracker.</span>
-    <a routerLink="/edit-profile">Complete profile</a>
-  </div>
+<div class="banner">
+  <span>Complete your profile to get the most out of your tracker.</span>
+  <a routerLink="/edit-profile">Complete profile</a>
+</div>
 }
 
 <section class="stats">
   <div class="stat-card">
     <span class="label">Applications</span>
-    <span class="value">{{ applicationCount }}</span>
+    <span class="value">{{ applicationCount() }}</span>
   </div>
   <div class="stat-card">
     <span class="label">Interviews</span>
-    <span class="value">{{ interviewCount }}</span>
+    <span class="value">{{ interviewCount() }}</span>
   </div>
   <div class="stat-card">
     <span class="label">Offers</span>
-    <span class="value">{{ offerCount }}</span>
+    <span class="value">{{ offerCount() }}</span>
   </div>
+</section>
+
+<section class="recent">
+  <div class="recent-header">
+    <h2>Applications</h2>
+    @if (applications().length > 0) {
+    <a routerLink="/applications/new" class="add-link">Add another</a>
+    }
+  </div>
+
+  @if (loading()) {
+  <p class="muted">Loading...</p>
+  } @else if (applications().length === 0) {
+  <p class="muted">No applications yet — add your first one above.</p>
+  } @else {
+  <ul class="application-list">
+   @for (app of applications(); track app.id) {
+  <li class="application-row">
+    <div class="app-main">
+      <span class="role">{{ app.role_title }}</span>
+      <span class="company">{{ companyName(app.company_id) }}</span>
+    </div>
+    <div class="app-meta">
+      <span class="status" [attr.data-status]="app.status">{{ app.status }}</span>
+      <span class="date">{{ app.applied_date }}</span>
+      <div class="app-actions">
+        <button class="icon-btn" (click)="editApplication(app.id)" aria-label="Edit">✎</button>
+        <button class="icon-btn danger" (click)="confirmDelete(app.id)" aria-label="Delete">🗑</button>
+      </div>
+    </div>
+  </li>
+}
+  </ul>
+  }
 </section>

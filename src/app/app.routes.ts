@@ -18,9 +18,11 @@ export const routes: Routes = [
         loadComponent: () => import('./edit-profile/edit-profile').then(m => m.EditProfile)
     },
     {
-        path:'home',
+        path: 'home',
         loadComponent: () => import('./home/home').then(m => m.Home)
     },
+    { path: 'applications/new', loadComponent: () => import('./add-new-application/add-new-application').then(m => m.AddNewApplication) },
+    { path: 'applications/:id/edit', loadComponent: () => import('./add-new-application/add-new-application').then(m => m.AddNewApplication) }, 
     {
         path: '',
         redirectTo: '/login',
